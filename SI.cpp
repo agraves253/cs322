@@ -1,81 +1,86 @@
 #include <ncurses.h>
+#include <thread>
 #include <unistd.h>
-#include <vector>
-
-#define DELAY 60000
+#define DELAY 10000
 
 class Alien
 {
-	public:
-		Alien(int x, int y, int max_x, int max_y, int direction)
-			: x_(x), y_(y), max_x_(max_x), max_y_(max_y), direction_(direction) {}
 
-		void update()
-		{
-			mvaddstr(y_-1,x_, "  | ");
-			mvaddstr(y_, x_, " _/\\_");
-			mvaddstr(y_+, x_+, "/____\\");
-			
-			x_ +=direction_;
-			if(x_ <= 0 || x_ >= max_x_ -5)
-			{
-				direction_ =-direction_;
-			}
-		}
+int x, y;
+int max_x;
+int direction;
 
-	private:
-		int x_;
-		int y_;
-		int max_x_;
-		int max_y_;
-		int direction_;
+public:
+        Alien(int initialX, int initialY, int maxX, int direction)
+        :x(initialX), y(initialY), max_x(maxX), direction(direction){}
+
+        void draw()
+        {
+                mvaddstr(y-1, x, "  | ");
+                mvaddstr(y, x, "_/\\_");
+                mvaddstr(y+1, x, "/___\\");
+                refresh();
+        }
+
+        void move()
+        {
+                int next_x = x + direction;
+
+                if(next_x+10 >= max_x || max_x < 0)
+                {
+                        direction *= -1;
+                }
+                else
+                {
+                        x+=direction;
+                }
+        }
 };
-
-
-class Player
-{
-	public:
-		Player(int x, int y, int max_x, int max_y)
-			: x_(x), y_(y), max_x_(max_x), max_y_(max_y) {}
-
-		void moveLeft()
-		{
-			if (x_ > 0)
-			{
-				x_--;
-			}
-		}
-
-		void moveRight()
-		{
-			if (x_ < max_x_ - 6)
-			{
-				x_++;
-			}
-		}
-
-
-		void draw() const
-		{
-			mvaddstr(y_, -1, x_, "  | ");
-			mvaddstr(y_, x_, "/\\_");
-			mvaddstr(y_+1,x_, "/___\\");
-		}
-
-	private:
-		int x_;
-		int y_;
-		int max_x_;
-		int max_y_;
-};
-
 
 int main(int argc, char *argv[])
-{	
-	initscr();
-	noecho();
-	curs_set(FALSE);
+{
+        //initializes ncurses
+        initscr();
+        noecho();
+        curs_set(FALSE);
 
-	endwin();
-	return 0;
-}	
+        //get dimensions of screen
+        int max_y, max_x;
+
+        //getmaxyx(stdscr, max_y, max_x);
+
+        //populate aliens
+        int number_aliens = 10;
+
+        Alien aliens[] =
+        {
+                Alien(0,0,max_x,1),
+                Alien(20,0,max_x,-1),
+                Alien(40,0,max_x,1),
+        };
+
+        while(1)
+        {
+                clear();
+
+                getmaxyx(stdscr, max_y, max_x);
+
+                //draw aliens
+                for(int i = 0; i < number_aliens; i++)
+                {
+                        aliens[i].draw();
+                }
+                refresh();
+                usleep(DELAY);
+                //refresh alien position
+                for(int i = 0; i < number_aliens; i++)
+                {
+                        aliens[i].move();
+                }
+
+
+
+        }
+
+        endwin();
+}
