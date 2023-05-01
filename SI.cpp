@@ -1,6 +1,7 @@
 #include <array>
 #include <ncurses.h>
 #include <unistd.h>
+#include <vector>  // added vector header
 
 #define DELAY 10000
 
@@ -70,7 +71,7 @@ class Player
 public:
   int x, y;
   int max_x;
-  std::vector<Bullet> bullets;
+  std::vector<Bullet> bullets;  // changed array to vector
 
   Player(int initialX, int initialY, int maxX)
       : x(initialX), y(initialY), max_x(maxX) {}
@@ -124,9 +125,10 @@ int main(int argc, char *argv[])
     }
   };
 
-Player player(max_x / 2, max_y - 3, max_x);
+  Player player(max_x / 2, max_y - 3, max_x);
 
-while (1) {
+while (1) 
+{
   clear();
 
   player.draw();
@@ -162,7 +164,7 @@ while (1) {
       player.move_right();
       break;
     case ' ':
-      player.fire_bullet();
+      player.fire_bullet(); // Call the fire_bullet method of the Player object
       break;
     default:
       break;
