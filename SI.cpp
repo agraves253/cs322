@@ -1,3 +1,4 @@
+
 #include <array>
 #include <ncurses.h>
 #include <unistd.h>
@@ -48,30 +49,25 @@ public:
 class Player
 {
 public:
-    int x, y;
-    int width, height;
-    int max_x;
+  int x, y;
+  int max_x;
+  
+  Player(int initialX, int initialY, int maxX)
+    : x(initialX), y(initialY), max_x(maxX) {}
 
-    Player(int initialX, int initialY, int maxX, int width, int height)
-        : x(initialX), y(initialY), max_x(maxX), width(width), height(height) {}
+  void draw()
+  {
+    mvaddstr(y - 1, x, "  | ");
+    mvaddstr(y + 1, x, "/___\\");
+  }
 
-    void draw()
-    {
-        mvaddstr(y - 1, x, "  | ");
-        mvaddstr(y, x, "/_\\");
-    }
-
-    void move(int dx)
-    {
-        int next_x = x + dx;
-
-        if (next_x < 0)
-            x = 0;
-        else if (next_x + width >= max_x)
-            x = max_x - width;
-        else
-            x = next_x;
-    }
+  void move(int direction)
+  {
+    int next_x = x + direction;
+    
+    if (next_x >= 0 && next_x <= max_x - 23)
+      x = next_x;
+  }
 };
 
 int main(int argc, char *argv[]) 
@@ -95,7 +91,7 @@ int main(int argc, char *argv[])
     }
   };
 
-  Player player((max_x - 23) / 2, max_y - 8, max_x, 23, 7);
+  Player player((max_x - 23) / 2, max_y - 8, max_x);
 
   while (1) 
   {
@@ -107,20 +103,21 @@ int main(int argc, char *argv[])
     }
 
     player.draw();
-
     refresh();
     usleep(DELAY);
 
     int ch = getch();
-    switch(ch) {
+    switch (ch) 
+    {
       case KEY_LEFT:
         player.move(-1);
         break;
       case KEY_RIGHT:
         player.move(1);
         break;
-      default:
-        break;
+      case 'q':
+        endwin();
+        return 0;
     }
 
     for (int i = 0; i < aliens.size(); i++) 
@@ -128,6 +125,4 @@ int main(int argc, char *argv[])
       aliens[i].move(aliens);
     }
   }
-
-  endwin();
 }
