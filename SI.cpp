@@ -2,6 +2,9 @@
 #include <ncurses.h>
 #include <unistd.h>
 
+
+#define KEY_LEFT 75
+#define KEY_RIGHT 77
 #define DELAY 60000
 
 class Alien 
