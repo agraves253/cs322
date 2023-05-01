@@ -75,7 +75,8 @@ int main(int argc, char *argv[])
     {
       aliens[i].draw();
     }
-
+     
+     refresh();
      usleep(DELAY);
 
     for (int i = 0; i < aliens.size(); i++) 
