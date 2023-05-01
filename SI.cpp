@@ -1,3 +1,41 @@
+#include <ncurses.h>
+#include <unistd.h>
+
+#define DELAY 60000
+
+class Alien
+{
+public:
+    int x, y;
+    int max_x;
+    int direction;
+
+    Alien(int initialX, int initialY, int maxX, int direction)
+    :x(initialX), y(initialY), max_x(maxX), direction(direction){}
+
+    void draw()
+    {
+        mvaddstr(y-1, x, "   | ");
+        mvaddstr(y, x, " _/\\_");
+        mvaddstr(y+1, x , "/____\\");
+    }
+
+    void move()
+    {
+        int next_x = x + direction;
+
+        if(next_x+10 >= max_x || next_x < 0 )
+        {
+            direction*= -1;
+        }
+        else
+        {
+            x+=direction;
+        }
+    }
+};
+
+
 int main(int argc, char *argv[])
 {
     initscr();
