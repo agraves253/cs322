@@ -45,7 +45,7 @@ public:
   }
 };
 
-class Player 
+class Player
 {
 public:
   int x, y;
@@ -54,21 +54,25 @@ public:
   Player(int initialX, int initialY, int maxX)
       : x(initialX), y(initialY), max_x(maxX) {}
 
-  void draw() 
+  void draw()
   {
-    mvaddstr(y, x, " | ");
-    mvaddstr(y + 1, x, "/ \\");
+    mvaddstr(y, x, "  /\\  ");
+    mvaddstr(y+1, x, " |  | ");
+    mvaddstr(y+2, x, " |  | ");
+    mvaddstr(y+3, x, " |__| ");
   }
 
-  void move_left() {
-    if (x > 0) {
+  void moveLeft()
+  {
+    if (x > 0)
+    {
       x--;
     }
   }
 
-  void move_right() 
+  void moveRight()
   {
-    if (x + 3 < max_x) 
+    if (x + 6 < max_x)
     {
       x++;
     }
@@ -81,6 +85,7 @@ int main(int argc, char *argv[])
   noecho();
   curs_set(FALSE);
 
+  // Global var 'stdscr is created by the call to 'initscr()'
   int max_y, max_x;
   getmaxyx(stdscr, max_y, max_x);
 
@@ -95,37 +100,36 @@ int main(int argc, char *argv[])
     }
   };
 
-  Player player(max_x / 2, max_y - 3, max_x);
+  Player player(max_x / 2, max_y - 4, max_x);
 
   while (1) 
   {
     clear();
+
+    player.draw();
 
     for (int i = 0; i < aliens.size(); i++) 
     {
       aliens[i].draw();
     }
 
-    player.draw();
-
     refresh();
     usleep(DELAY);
+
+    int ch = getch();
+    switch(ch)
+    {
+      case KEY_LEFT:
+        player.moveLeft();
+        break;
+      case KEY_RIGHT:
+        player.moveRight();
+        break;
+    }
 
     for (int i = 0; i < aliens.size(); i++) 
     {
       aliens[i].move(aliens);
-    }
-
-    int ch = getch();
-    switch (ch) {
-      case 'a':
-        player.move_left();
-        break;
-      case 'd':
-        player.move_right();
-        break;
-      default:
-        break;
     }
   }
 
