@@ -19,11 +19,18 @@ public:
     mvaddstr(y + 1, x, "/____\\");
   }
 
-  void move() {
+  void move(std::array<Alien, 5>& aliens) {
     int next_x = x + direction;
 
     if (next_x + 10 >= max_x || next_x < 0) {
-      direction *= -1;
+      // Change the direction of each alien in the array
+      for (int i = 0; i < aliens.size(); i++) {
+        aliens[i].direction *= -1;
+      }
+      // Move each alien in the opposite direction after changing direction
+      for (int i = 0; i < aliens.size(); i++) {
+        aliens[i].x += aliens[i].direction;
+      }
     } else {
       x += direction;
     }
@@ -58,7 +65,7 @@ int main(int argc, char *argv[]) {
     usleep(DELAY);
 
     for (int i = 0; i < aliens.size(); i++) {
-      aliens[i].move();
+      aliens[i].move(aliens);
     }
   }
 
