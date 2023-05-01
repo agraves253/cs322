@@ -1,4 +1,3 @@
-
 #include <array>
 #include <ncurses.h>
 #include <unistd.h>
@@ -46,30 +45,6 @@ public:
   }
 };
 
-class Player
-{
-public:
-  int x, y;
-  int max_x;
-  
-  Player(int initialX, int initialY, int maxX)
-    : x(initialX), y(initialY), max_x(maxX) {}
-
-  void draw()
-  {
-    mvaddstr(y - 1, x, "  | ");
-    mvaddstr(y + 1, x, "/___\\");
-  }
-
-  void move(int direction)
-  {
-    int next_x = x + direction;
-    
-    if (next_x >= 0 && next_x <= max_x - 23)
-      x = next_x;
-  }
-};
-
 int main(int argc, char *argv[]) 
 {
   initscr();
@@ -91,8 +66,6 @@ int main(int argc, char *argv[])
     }
   };
 
-  Player player((max_x - 23) / 2, max_y - 8, max_x);
-
   while (1) 
   {
     clear();
@@ -102,27 +75,14 @@ int main(int argc, char *argv[])
       aliens[i].draw();
     }
 
-    player.draw();
     refresh();
     usleep(DELAY);
-
-    int ch = getch();
-    switch (ch) 
-    {
-      case KEY_LEFT:
-        player.move(-1);
-        break;
-      case KEY_RIGHT:
-        player.move(1);
-        break;
-      case 'q':
-        endwin();
-        return 0;
-    }
 
     for (int i = 0; i < aliens.size(); i++) 
     {
       aliens[i].move(aliens);
     }
   }
+
+  endwin();
 }
