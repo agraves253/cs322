@@ -110,6 +110,12 @@ while (1)
   refresh(); // Refresh the screen after drawing everything
   usleep(DELAY);
 
+  // Move aliens independently of user input
+  for (int i = 0; i < aliens.size(); i++) 
+  {
+    aliens[i].move(aliens);
+  }
+
   int ch = getch();
   switch (ch) {
     case 'a':
@@ -120,11 +126,6 @@ while (1)
       break;
     default:
       break;
-  }
-
-  for (int i = 0; i < aliens.size(); i++) 
-  {
-    aliens[i].move(aliens);
   }
 }
 
