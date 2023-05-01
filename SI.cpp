@@ -2,7 +2,7 @@
 #include <ncurses.h>
 #include <unistd.h>
 
-#define DELAY 60000
+#define DELAY 10000
 
 class Alien 
 {
