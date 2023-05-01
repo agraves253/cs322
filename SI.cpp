@@ -19,15 +19,23 @@ public:
     mvaddstr(y + 1, x, "/____\\");
   }
 
-  void move() {
+  void move()
+{
     int next_x = x + direction;
 
-    if (next_x + 10 >= max_x || next_x < 0) {
-      direction *= -1;
-    } else {
-      x += direction;
+    if (next_x + 10 >= max_x || next_x < 0)
+    {
+        // Change the direction of each alien in the array
+        for (int i = 0; i < num_aliens; i++)
+        {
+            aliens[i].direction *= -1;
+        }
     }
-  }
+    else
+    {
+        x += direction;
+    }
+}
 };
 
 int main(int argc, char *argv[]) {
