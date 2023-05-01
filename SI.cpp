@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
     
       Alien(0 * 20, 3 * 15, max_x, 1),
       Alien(1 * 20, 3 * 15, max_x, 1),
-      Alien(2 * 20, 3 15, max_x, 1),
+      Alien(2 * 20, 3 * 15, max_x, 1),
       Alien(3 * 20, 3 * 15, max_x, 1);
       Alien(4 * 20, 3 * 15, max_x, 1),
       Alien(5 * 20, 3 * 15, max_x, 1),
