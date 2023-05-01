@@ -96,7 +96,6 @@ int main(int argc, char *argv[]) {
   };
 
   Player player(max_x / 2, max_y - 3, max_x);
-
 while (1) 
 {
   clear();
@@ -108,12 +107,7 @@ while (1)
     aliens[i].draw();
   }
 
-  for (int i = 0; i < aliens.size(); i++) // move the aliens here
-  {
-    aliens[i].move(aliens);
-  }
-
-  refresh();
+  refresh(); // Refresh the screen after drawing everything
   usleep(DELAY);
 
   int ch = getch();
@@ -127,6 +121,12 @@ while (1)
     default:
       break;
   }
+
+  for (int i = 0; i < aliens.size(); i++) 
+  {
+    aliens[i].move(aliens);
+  }
+}
 }
 
   endwin();
