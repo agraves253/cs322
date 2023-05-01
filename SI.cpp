@@ -111,16 +111,17 @@ while (1)
   refresh();
   usleep(DELAY);
 
-  int ch = getch();
-  switch (ch) {
-    case 'a':
-      player.move_left();
-      break;
-    case 'd':
-      player.move_right();
-      break;
-    default:
-      break;
+int ch = getch();
+switch (ch) {
+  case KEY_LEFT:
+    player.move_left();
+    break;
+  case KEY_RIGHT:
+    player.move_right();
+    break;
+  default:
+    break;
+}
   }
 
   for (int i = 0; i < aliens.size(); i++) 
