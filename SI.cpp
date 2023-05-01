@@ -47,10 +47,10 @@ int main(int argc, char *argv[])
 
     int num_aliens = 5;
     Alien aliens[num_aliens];
-
-    for(int i=0; i<num_aliens; i++)
+    
+    for (int i = 0; i < num_aliens; i++) 
     {
-        aliens[i] = Alien(i*20, 0, max_x, 1);
+    aliens[i] = Alien(i * 20, 0, max_x, 1);
     }
 
     while(1)
