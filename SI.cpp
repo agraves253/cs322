@@ -97,35 +97,37 @@ int main(int argc, char *argv[]) {
 
   Player player(max_x / 2, max_y - 3, max_x);
 
-  while (1) {
-    clear();
-    refresh();
+while (1) 
+{
+  clear();
 
-    for (int i = 0; i < aliens.size(); i++) {
-      aliens[i].draw();
-    }
+  player.draw();
 
-    player.draw();
-
-    refresh();
-    usleep(DELAY);
-
-    for (int i = 0; i < aliens.size(); i++) {
-      aliens[i].move(aliens);
-    }
-
-    int ch = getch();
-    switch (ch) {
-      case 'a':
-        player.move_left();
-        break;
-      case 'd':
-        player.move_right();
-        break;
-      default:
-        break;
-    }
+  for (int i = 0; i < aliens.size(); i++) 
+  {
+    aliens[i].draw();
   }
+
+  refresh();
+  usleep(DELAY);
+
+  int ch = getch();
+  switch (ch) {
+    case 'a':
+      player.move_left();
+      break;
+    case 'd':
+      player.move_right();
+      break;
+    default:
+      break;
+  }
+
+  for (int i = 0; i < aliens.size(); i++) 
+  {
+    aliens[i].move(aliens);
+  }
+}
 
   endwin();
 }
