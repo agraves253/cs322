@@ -127,8 +127,9 @@ while (1)
     aliens[i].move(aliens);
   }
 }
-}
 
-  endwin();
+endwin(); // added this line to properly close the ncurses window
+
+return 0; // added this line to return a value from main
 }
 
