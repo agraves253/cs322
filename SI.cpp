@@ -19,7 +19,7 @@ public:
     mvaddstr(y + 1, x, "/____\\");
   }
 
-  void move(std::array<Alien, 30>& aliens) {
+  void move(std::array<Alien, 32>& aliens) {
     int next_x = x + direction;
 
     if (next_x + 10 >= max_x || next_x < 0) {
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
   int max_y, max_x;
   getmaxyx(stdscr, max_y, max_x);
 
-  std::array<Alien, 30> aliens = {{
+  std::array<Alien, 32> aliens = {{
       Alien(0 * 20, 0 * 15, max_x, 1),
       Alien(1 * 20, 0 * 15, max_x, 1),
       Alien(2 * 20, 0 * 15, max_x, 1),
@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
       Alien(5 * 20, 1 * 15, max_x, 1),
       Alien(6 * 20, 1 * 15, max_x, 1),
       Alien(7 * 20, 1 * 15, max_x, 1),
-
+    
       Alien(0 * 20, 2 * 15, max_x, 1),
       Alien(1 * 20, 2 * 15, max_x, 1),
       Alien(2 * 20, 2 * 15, max_x, 1),
