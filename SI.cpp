@@ -46,13 +46,14 @@ int main(int argc, char *argv[])
     getmaxyx(stdscr, max_y, max_x);
 
     int num_aliens = 5;
-    Alien aliens[num_aliens];
+    Alien aliens[num_aliens] = {
+        Alien(0, 0, max_x, 1),
+        Alien(20, 0, max_x, 1),
+        Alien(40, 0, max_x, 1),
+        Alien(60, 0, max_x, 1),
+        Alien(80, 0, max_x, 1)
+    };
     
-    for (int i = 0; i < num_aliens; i++) 
-    {
-    aliens[i] = Alien(i * 20, 0, max_x, 1);
-    }
-
     while(1)
     {
         clear();
