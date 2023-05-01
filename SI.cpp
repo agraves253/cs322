@@ -45,13 +45,42 @@ public:
   }
 };
 
-int main(int argc, char *argv[]) 
+class Player 
 {
+public:
+  int x, y;
+  int max_x;
+
+  Player(int initialX, int initialY, int maxX)
+      : x(initialX), y(initialY), max_x(maxX) {}
+
+  void draw() 
+  {
+    mvaddstr(y, x, " | ");
+    mvaddstr(y + 1, x, "/ \\");
+  }
+
+  void move_left() 
+  {
+    if (x > 0) {
+      x--;
+    }
+  }
+
+  void move_right() 
+  {
+    if (x + 3 < max_x) 
+    {
+      x++;
+    }
+  }
+};
+
+int main(int argc, char *argv[]) {
   initscr();
   noecho();
   curs_set(FALSE);
 
-  // Global var 'stdscr is created by the call to 'initscr()'
   int max_y, max_x;
   getmaxyx(stdscr, max_y, max_x);
 
@@ -66,22 +95,35 @@ int main(int argc, char *argv[])
     }
   };
 
-  while (1) 
-  {
+  Player player(max_x / 2, max_y - 3, max_x);
+
+  while (1) {
     clear();
     refresh();
 
-    for (int i = 0; i < aliens.size(); i++) 
-    {
+    for (int i = 0; i < aliens.size(); i++) {
       aliens[i].draw();
     }
-     
-     refresh();
-     usleep(DELAY);
 
-    for (int i = 0; i < aliens.size(); i++) 
-    {
+    player.draw();
+
+    refresh();
+    usleep(DELAY);
+
+    for (int i = 0; i < aliens.size(); i++) {
       aliens[i].move(aliens);
+    }
+
+    int ch = getch();
+    switch (ch) {
+      case 'a':
+        player.move_left();
+        break;
+      case 'd':
+        player.move_right();
+        break;
+      default:
+        break;
     }
   }
 
