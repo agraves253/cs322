@@ -4,7 +4,8 @@
 
 #define DELAY 60000
 
-class Alien {
+class Alien 
+{
 public:
   int x, y;
   int max_x;
@@ -13,31 +14,39 @@ public:
   Alien(int initialX, int initialY, int maxX, int direction)
       : x(initialX), y(initialY), max_x(maxX), direction(direction) {}
 
-  void draw() {
+  void draw() 
+  {
     mvaddstr(y - 1, x, "   | ");
     mvaddstr(y, x, " _/\\_");
     mvaddstr(y + 1, x, "/____\\");
   }
 
-  void move(std::array<Alien, 32>& aliens) {
+  void move(std::array<Alien, 5>& aliens) 
+  {
     int next_x = x + direction;
 
-    if (next_x + 10 >= max_x || next_x < 0) {
+    if (next_x + 10 >= max_x || next_x < 0) 
+    {
       // Change the direction of each alien in the array
-      for (int i = 0; i < aliens.size(); i++) {
+      for (int i = 0; i < aliens.size(); i++) 
+      {
         aliens[i].direction *= -1;
       }
       // Move each alien in the opposite direction after changing direction
-      for (int i = 0; i < aliens.size(); i++) {
+      for (int i = 0; i < aliens.size(); i++) 
+      {
         aliens[i].x += aliens[i].direction;
       }
-    } else {
+    } 
+    else 
+    {
       x += direction;
     }
   }
 };
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) 
+{
   initscr();
   noecho();
   curs_set(FALSE);
@@ -46,56 +55,31 @@ int main(int argc, char *argv[]) {
   int max_y, max_x;
   getmaxyx(stdscr, max_y, max_x);
 
-  std::array<Alien, 32> aliens = {{
-      Alien(0 * 20, 0 * 15, max_x, 1),
-      Alien(1 * 20, 0 * 15, max_x, 1),
-      Alien(2 * 20, 0 * 15, max_x, 1),
-      Alien(3 * 20, 0 * 15, max_x, 1),
-      Alien(4 * 20, 0 * 15, max_x, 1),
-      Alien(5 * 20, 0 * 15, max_x, 1),
-      Alien(6 * 20, 0 * 15, max_x, 1),
-      Alien(7 * 20, 0 * 15, max_x, 1),
+  std::array<Alien, 5> aliens = 
+  {
+    {
+      Alien(0 * 20, 0, max_x, 1),
+      Alien(1 * 20, 0, max_x, 1),
+      Alien(2 * 20, 0, max_x, 1),
+      Alien(3 * 20, 0, max_x, 1),
+      Alien(4 * 20, 0, max_x, 1),
+    }
+  };
 
-      Alien(0 * 20, 1 * 15, max_x, 1),
-      Alien(1 * 20, 1 * 15, max_x, 1),
-      Alien(2 * 20, 1 * 15, max_x, 1),
-      Alien(3 * 20, 1 * 15, max_x, 1),
-      Alien(4 * 20, 1 * 15, max_x, 1),
-      Alien(5 * 20, 1 * 15, max_x, 1),
-      Alien(6 * 20, 1 * 15, max_x, 1),
-      Alien(7 * 20, 1 * 15, max_x, 1),
-    
-      Alien(0 * 20, 2 * 15, max_x, 1),
-      Alien(1 * 20, 2 * 15, max_x, 1),
-      Alien(2 * 20, 2 * 15, max_x, 1),
-      Alien(3 * 20, 2 * 15, max_x, 1),
-      Alien(4 * 20, 2 * 15, max_x, 1),
-      Alien(5 * 20, 2 * 15, max_x, 1),
-      Alien(6 * 20, 2 * 15, max_x, 1),
-      Alien(7 * 20, 2 * 15, max_x, 1),
-    
-      Alien(0 * 20, 3 * 15, max_x, 1),
-      Alien(1 * 20, 3 * 15, max_x, 1),
-      Alien(2 * 20, 3 * 15, max_x, 1),
-      Alien(3 * 20, 3 * 15, max_x, 1),
-      Alien(4 * 20, 3 * 15, max_x, 1),
-      Alien(5 * 20, 3 * 15, max_x, 1),
-      Alien(6 * 20, 3 * 15, max_x, 1),
-      Alien(7 * 20, 3 * 15, max_x, 1),
-
-  }};
-
-  while (1) {
+  while (1) 
+  {
     clear();
 
-    for (int i = 0; i < aliens.size(); i++) {
+    for (int i = 0; i < aliens.size(); i++) 
+    {
       aliens[i].draw();
     }
 
     refresh();
     usleep(DELAY);
 
-    for (int i = 0; i < aliens.size(); i++) {
+    for (int i = 0; i < aliens.size(); i++) 
+    {
       aliens[i].move(aliens);
     }
   }
