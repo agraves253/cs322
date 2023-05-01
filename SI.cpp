@@ -45,11 +45,32 @@ public:
   }
 };
 
+class Bullet 
+{
+public:
+  int x, y;
+  int dy;
+  
+  Bullet(int initialX, int initialY, int initialDY)
+      : x(initialX), y(initialY), dy(initialDY) {}
+  
+  void draw() 
+  {
+    mvaddstr(y, x, "^");
+  }
+  
+  void move() 
+  {
+    y += dy;
+  }
+};
+
 class Player 
 {
 public:
   int x, y;
   int max_x;
+  std::vector<Bullet> bullets;
 
   Player(int initialX, int initialY, int maxX)
       : x(initialX), y(initialY), max_x(maxX) {}
@@ -74,9 +95,17 @@ public:
       x++;
     }
   }
+
+  void fire_bullet() 
+  {
+    // Create a new bullet object and add it to the bullets vector
+    Bullet bullet(x + 1, y - 1, -1);
+    bullets.push_back(bullet);
+  }
 };
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) 
+{
   initscr();
   noecho();
   curs_set(FALSE);
@@ -95,9 +124,9 @@ int main(int argc, char *argv[]) {
     }
   };
 
-  Player player(max_x / 2, max_y - 3, max_x);
-while (1) 
-{
+Player player(max_x / 2, max_y - 3, max_x);
+
+while (1) {
   clear();
 
   player.draw();
@@ -105,6 +134,13 @@ while (1)
   for (int i = 0; i < aliens.size(); i++) 
   {
     aliens[i].draw();
+  }
+
+  // Draw and move bullets
+  for (int i = 0; i < player.bullets.size(); i++) 
+  {
+    player.bullets[i].draw();
+    player.bullets[i].move();
   }
 
   refresh(); // Refresh the screen after drawing everything
@@ -117,12 +153,16 @@ while (1)
   }
 
   int ch = getch();
-  switch (ch) {
+  switch (ch) 
+  {
     case 'a':
       player.move_left();
       break;
     case 'd':
       player.move_right();
+      break;
+    case ' ':
+      player.fire_bullet();
       break;
     default:
       break;
