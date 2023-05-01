@@ -69,14 +69,14 @@ int main(int argc, char *argv[])
   while (1) 
   {
     clear();
+    refresh();
 
     for (int i = 0; i < aliens.size(); i++) 
     {
       aliens[i].draw();
     }
 
-    refresh();
-    usleep(DELAY);
+     usleep(DELAY);
 
     for (int i = 0; i < aliens.size(); i++) 
     {
