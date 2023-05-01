@@ -2,9 +2,6 @@
 #include <ncurses.h>
 #include <unistd.h>
 
-
-#define KEY_LEFT 75
-#define KEY_RIGHT 77
 #define DELAY 60000
 
 class Alien 
@@ -100,34 +97,37 @@ int main(int argc, char *argv[]) {
 
   Player player(max_x / 2, max_y - 3, max_x);
 
-  while (1) {
-    clear();
- 
-    for (int i = 0; i < aliens.size(); i++) {
-      aliens[i].draw();
-    }
+while (1) 
+{
+  clear();
 
-    player.draw();
+  player.draw();
 
-    refresh();
-    usleep(DELAY);
-
-    for (int i = 0; i < aliens.size(); i++) {
-      aliens[i].move(aliens);
-    }
-
-    int ch = getch();
-    switch (ch) {
-      case KEY_LEFT:
-        player.move_left();
-        break;
-      case KEY_RIGHT:
-        player.move_right();
-        break;
-      default:
-        break;
-    }
+  for (int i = 0; i < aliens.size(); i++) 
+  {
+    aliens[i].draw();
   }
+
+  refresh();
+  usleep(DELAY);
+
+  int ch = getch();
+  switch (ch) {
+    case 'a':
+      player.move_left();
+      break;
+    case 'd':
+      player.move_right();
+      break;
+    default:
+      break;
+  }
+
+  for (int i = 0; i < aliens.size(); i++) 
+  {
+    aliens[i].move(aliens);
+  }
+}
 
   endwin();
 }
