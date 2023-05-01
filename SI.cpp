@@ -108,6 +108,11 @@ while (1)
     aliens[i].draw();
   }
 
+  for (int i = 0; i < aliens.size(); i++) // move the aliens here
+  {
+    aliens[i].move(aliens);
+  }
+
   refresh();
   usleep(DELAY);
 
@@ -121,11 +126,6 @@ while (1)
       break;
     default:
       break;
-  }
-
-  for (int i = 0; i < aliens.size(); i++) 
-  {
-    aliens[i].move(aliens);
   }
 }
 
