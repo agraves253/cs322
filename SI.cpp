@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <string>
 
-class Player 
+/*class Player 
 {
 public:
     Player(int x, int y, char symbol)
@@ -29,6 +29,45 @@ private:
     int x_;
     int y_;
     char symbol_;
+};*/
+
+class Player 
+{
+public:
+    Player(int x, int y, const std::string& symbol)
+        : x_(x), y_(y), symbol_(symbol) {}
+
+    /*void move(int dx, int dy) 
+    {
+        x_ += dx;
+        y_ += dy;
+    }*/
+    
+    void move(int dx, int dy) 
+{
+    x_ += dx;
+    y_ += dy;
+    // Ensure the player stays within the screen boundaries
+    if (x_ < 0) x_ = 0;
+    if (x_ + symbol_.length() > COLS) x_ = COLS - symbol_.length();
+}
+
+    void draw() const 
+    {       
+        for (size_t i = 0; i < symbol_.length(); ++i) 
+        {
+            mvaddch(y_, x_ + i, symbol_[i]);
+        }
+    }
+
+    int x() const { return x_; }
+    int y() const { return y_; }
+    const std::string& symbol() const { return symbol_; }
+
+private:
+    int x_;
+    int y_;
+    std::string symbol_;
 };
 
 class Alien 
@@ -66,40 +105,6 @@ private:
     std::string symbol_;
     int direction_;
 };
-
-
-/*class Alien 
-{
-public:
-    Alien(int x, int y, char symbol)
-        : x_(x), y_(y), symbol_(symbol), direction_(1) {}
-
-    void move() 
-    {
-        x_ += direction_;
-    }
-
-    void reverseDirection() 
-    {
-        direction_ *= -1;
-        y_ += 1;
-    }
-
-    void draw() const 
-    {
-        mvaddch(y_, x_, symbol_);
-    }
-
-    int x() const { return x_; }
-    int y() const { return y_; }
-    char symbol() const { return symbol_; }
-
-private:
-    int x_;
-    int y_;
-    char symbol_;
-    int direction_;
-};*/
 
 class Bullet 
 {
@@ -140,16 +145,10 @@ int main() {
     
     refresh(); //possible fuck up
     
-    // Initialize the player
-    Player player((COLS - 1) / 2, LINES - 2, '@');
+    /*// Initialize the player
+    Player player((COLS - 1) / 2, LINES - 2, '@');*/
+    Player player((COLS - 3) / 2, LINES - 2, "/_\\");
 
-    /*// Initialize the aliens
-    std::vector<Alien> aliens;
-    for (int i = 0; i < 4; ++i) {
-        for (int j = 0; j < 10; ++j) {
-            aliens.emplace_back(5 + j * 4, 2 + i * 4, 'O');
-        }
-    }*/
     // Initialize the aliens
     std::vector<Alien> aliens;
     for (int i = 0; i < 4; ++i)
