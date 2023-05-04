@@ -128,6 +128,8 @@ int main() {
 
     // Initialize the bullets
     std::vector<Bullet> bullets;
+    
+    int score = 0;
 
     // Game loop
     while (true) 
@@ -216,6 +218,7 @@ int main() {
             {
                 jt = aliens.erase(jt);
                 hit = true;
+                score += 10;  // Update score
                 break;
             } 
            else 
@@ -244,6 +247,12 @@ int main() {
         refresh();
         usleep(20000);
     }
+    
+    // Print score
+    mvprintw(0, COLS - 10, "SCORE: %d", score);
+
+    refresh();
+    usleep(20000);
 
     // Clean up ncurses
     endwin();
