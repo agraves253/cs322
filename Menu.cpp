@@ -8,7 +8,7 @@
 
 #include "SI.cpp"
 
-int main()
+int menuMain()
 {
 
     /* NCURSES START */
