@@ -205,7 +205,7 @@ int main() {
         }
 
         refresh();
-        usleep(10000)
+        usleep(10000);
     }
 
     // Clean up ncurses
