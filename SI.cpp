@@ -81,7 +81,9 @@ int main()
             if (it->y() <= 0 || it->y() >= LINES - 1) 
             {
                 it = bullets.erase(it);
-            } else {
+            } 
+            else 
+            {
                 ++it;
             }
         }
@@ -97,13 +99,17 @@ int main()
                     jt = aliens.erase(jt);
                     hit = true;
                     break;
-                } else {
+                } 
+                else 
+                {
                     ++jt;
                 }
             }
             if (hit) {
                 it = bullets.erase(it);
-            } else {
+            } 
+            else 
+            {
                 ++it;
             }
         }
