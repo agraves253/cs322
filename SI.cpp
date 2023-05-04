@@ -231,7 +231,7 @@ int main() {
     {
         ++it;
     }
-
+ }
         // Check for game over
         if (aliens.empty()) 
         {
@@ -249,4 +249,4 @@ int main() {
     endwin();
 
     return 0;
-}}
+}
