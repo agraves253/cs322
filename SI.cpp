@@ -181,7 +181,7 @@ int main() {
         }
 
         // Collision detection
-        for (auto it = bullets.begin(); it != bullets.end();) 
+        /*for (auto it = bullets.begin(); it != bullets.end();) 
         {
             bool hit = false;
             for (auto jt = aliens.begin(); jt != aliens.end();) 
@@ -205,7 +205,32 @@ int main() {
             {
                 ++it;
             }
+        }*/
+        
+        for (auto it = bullets.begin(); it != bullets.end();) 
+        {
+            bool hit = false;
+            for (auto jt = aliens.begin(); jt != aliens.end();) 
+            {
+            if (it->y() == jt->y() && it->x() >= jt->x() && it->x() < jt->x() + jt->symbol().length()) 
+            {
+                jt = aliens.erase(jt);
+                hit = true;
+                break;
+            } 
+           else 
+            {
+                ++jt;
+            }
         }
+    if (hit) 
+    {
+        it = bullets.erase(it);
+    } 
+    else 
+    {
+        ++it;
+    }
 
         // Check for game over
         if (aliens.empty()) 
