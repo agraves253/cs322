@@ -100,7 +100,7 @@ int main() {
     noecho();
     keypad(stdscr, TRUE);
     curs_set(0);
-    //timeout(100);
+    timeout(100);
 
     // Initialize the player
     Player player((COLS - 1) / 2, LINES - 2, '@');
