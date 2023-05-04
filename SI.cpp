@@ -4,7 +4,7 @@
 #include <ctime>
 #include <unistd.h>
 
-#DEFINE DELAY 60000
+#define DELAY 60000
 
 class Player 
 {
