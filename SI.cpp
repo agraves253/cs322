@@ -120,7 +120,7 @@ int main() {
     std::vector<Alien> aliens;
     for (int i = 0; i < 4; ++i)
     {
-    for (int j = 0; j < 10; ++j) 
+    for (int j = 0; j < 20; ++j) 
     {
         aliens.emplace_back(5 + j * 4, 2 + i * 4, "  -@|__|@-  ");
     }
