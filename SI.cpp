@@ -2,6 +2,9 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <unistd.h>
+
+#DEFINE DELAY 60000
 
 class Player 
 {
@@ -94,7 +97,6 @@ int main() {
     // Initialize ncurses
     initscr();
     cbreak();
-    halfdelay(1);
     noecho();
     keypad(stdscr, TRUE);
     curs_set(0);
@@ -202,6 +204,7 @@ int main() {
         }
 
         refresh();
+        usleep(DELAY);
     }
 
     // Clean up ncurses
@@ -209,3 +212,4 @@ int main() {
 
     return 0;
 }
+
