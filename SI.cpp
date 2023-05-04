@@ -2,9 +2,6 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
-#include <unistd.h>
-
-//#define DELAY 10000
 
 class Player 
 {
@@ -204,7 +201,6 @@ int main() {
         }
 
         refresh();
-        //usleep(DELAY);
     }
 
     // Clean up ncurses
@@ -212,4 +208,3 @@ int main() {
 
     return 0;
 }
-
