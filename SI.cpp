@@ -97,7 +97,7 @@ int main() {
     noecho();
     keypad(stdscr, TRUE);
     curs_set(0);
-    timeout(100);
+    timeout(200);
     
     refresh(); //possible fuck up
     
