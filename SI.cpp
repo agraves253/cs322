@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <unistd.h>
+#include <string>
 
 class Player 
 {
@@ -30,8 +31,44 @@ private:
     char symbol_;
 };
 
-
 class Alien 
+{
+public:
+    Alien(int x, int y, std::string symbol)
+        : x_(x), y_(y), symbol_(symbol), direction_(1) {}
+
+    void move() 
+    {
+        x_ += direction_;
+    }
+
+    void reverseDirection() 
+    {
+        direction_ *= -1;
+        y_ += 1;
+    }
+
+    void draw() const 
+    {
+        for (int i = 0; i < symbol_.size(); ++i) 
+        {
+            mvaddch(y_, x_ + i, symbol_[i]);
+        }
+    }
+
+    int x() const { return x_; }
+    int y() const { return y_; }
+    std::string symbol() const { return symbol_; }
+
+private:
+    int x_;
+    int y_;
+    std::string symbol_;
+    int direction_;
+};
+
+
+/*class Alien 
 {
 public:
     Alien(int x, int y, char symbol)
@@ -62,7 +99,7 @@ private:
     int y_;
     char symbol_;
     int direction_;
-};
+};*/
 
 class Bullet 
 {
@@ -106,13 +143,22 @@ int main() {
     // Initialize the player
     Player player((COLS - 1) / 2, LINES - 2, '@');
 
-    // Initialize the aliens
+    /*// Initialize the aliens
     std::vector<Alien> aliens;
     for (int i = 0; i < 4; ++i) {
         for (int j = 0; j < 10; ++j) {
             aliens.emplace_back(5 + j * 4, 2 + i * 4, 'O');
         }
+    }*/
+    // Initialize the aliens
+    std::vector<Alien> aliens;
+    for (int i = 0; i < 4; ++i)
+    {
+    for (int j = 0; j < 10; ++j) 
+    {
+        aliens.emplace_back(5 + j * 4, 2 + i * 4, "OoOoO");
     }
+}
 
     // Initialize the bullets
     std::vector<Bullet> bullets;
