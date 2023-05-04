@@ -144,7 +144,7 @@ int main() {
         bool reverseDirection = false;
         for (auto& alien : aliens) 
         {
-            alien.move(alien_speed);
+            alien.move() * alien_speed;
             alien.draw();
             if (alien.x() <= 0 || alien.x() >= COLS - 1) 
             {
