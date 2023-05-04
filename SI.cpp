@@ -7,7 +7,7 @@
 class Player 
 {
 public:
-    Player(int x, int y, char symbol)
+    Player(int x, int y, const std::string& symbol)
         : x_(x), y_(y), symbol_(symbol) {}
 
     void move(int dx, int dy) 
@@ -17,17 +17,17 @@ public:
     }
 
     void draw() const {
-        mvaddch(y_, x_, symbol_);
+        mvaddstr(y_, x_, symbol_.c_str());
     }
 
     int x() const { return x_; }
     int y() const { return y_; }
-    char symbol() const { return symbol_; }
+    std::string symbol() const { return symbol_; }
 
 private:
     int x_;
     int y_;
-    char symbol_;
+    std::string symbol_;
 };
 
 
@@ -39,7 +39,7 @@ public:
 
     void move() 
     {
-        x_ += direction_;
+        x_ += x_ += direction_ * alien_speed;
     }
 
     void reverseDirection() 
@@ -144,7 +144,7 @@ int main() {
         bool reverseDirection = false;
         for (auto& alien : aliens) 
         {
-            alien.move() * alien_speed;
+            alien.move();
             alien.draw();
             if (alien.x() <= 0 || alien.x() >= COLS - 1) 
             {
