@@ -98,7 +98,9 @@ int main() {
     keypad(stdscr, TRUE);
     curs_set(0);
     timeout(100);
-
+    
+    refresh();
+    
     // Initialize the player
     Player player((COLS - 1) / 2, LINES - 2, '@');
 
