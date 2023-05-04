@@ -99,7 +99,7 @@ int main() {
     curs_set(0);
     timeout(100);
     
-    refresh(); //possible fuck up
+    //refresh(); //possible fuck up
     
     // Initialize the player
     Player player((COLS - 1) / 2, LINES - 2, '@');
@@ -119,7 +119,7 @@ int main() {
     while (true) 
     {
         clear();
-        refresh(); //possible fuck up
+        //refresh(); //possible fuck up
 
         // Move and draw the player
         int ch = getch();
