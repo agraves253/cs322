@@ -112,10 +112,8 @@ int main() {
     nodelay(stdscr, TRUE);
     //timeout(10);
     
-    refresh(); //possible fuck up
+    refresh();
     
-    /*// Initialize the player
-    Player player((COLS - 1) / 2, LINES - 2, '@');*/
     Player player((COLS - 3) / 2, LINES - 2, "/_\\");
 
     // Initialize the aliens
