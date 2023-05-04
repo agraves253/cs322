@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <unistd.h>
+#include <string>
 
 class Player 
 {
