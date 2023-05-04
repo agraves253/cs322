@@ -2,6 +2,7 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <unistd.h>
 
 class Player 
 {
@@ -97,7 +98,8 @@ int main() {
     noecho();
     keypad(stdscr, TRUE);
     curs_set(0);
-    timeout(10);
+    nodelay(stdscr, TRUE);
+    //timeout(10);
     
     refresh(); //possible fuck up
     
@@ -203,6 +205,7 @@ int main() {
         }
 
         refresh();
+        usleep(10000)
     }
 
     // Clean up ncurses
