@@ -37,6 +37,8 @@ class Alien
 public:
     Alien(int x, int y, char symbol)
         : x_(x), y_(y), symbol_(symbol), direction_(1) {}
+    
+    int alien_speed = 1;
 
     void move() 
     {
@@ -102,10 +104,8 @@ int main() {
     nodelay(stdscr, TRUE);
     //timeout(10);
     
-    refresh(); //possible fuck up
-    
-    int alien_speed = 1;
-    
+    refresh();  
+     
     // Initialize the player
     Player player((COLS - 1) / 2, LINES - 2, '|__|');
 
