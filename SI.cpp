@@ -35,7 +35,7 @@ private:
 class Alien 
 {
 public:
-    Alien(int x, int y, char symbol)
+    Alien(int x, int y, const std::string& symbol)
         : x_(x), y_(y), symbol_(symbol), direction_(1) {}
     
     int alien_speed = 1;
