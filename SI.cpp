@@ -1,3 +1,8 @@
+#include <ncurses.h>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+
 class Player 
 {
 public:
