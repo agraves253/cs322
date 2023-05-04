@@ -5,52 +5,21 @@
 #include <unistd.h>
 #include <string>
 
-/*class Player 
-{
-public:
-    Player(int x, int y, char symbol)
-        : x_(x), y_(y), symbol_(symbol) {}
-
-    void move(int dx, int dy) 
-    {
-        x_ += dx;
-        y_ += dy;
-    }
-
-    void draw() const {
-        mvaddch(y_, x_, symbol_);
-    }
-
-    int x() const { return x_; }
-    int y() const { return y_; }
-    char symbol() const { return symbol_; }
-
-private:
-    int x_;
-    int y_;
-    char symbol_;
-};*/
-
 class Player 
 {
 public:
     Player(int x, int y, const std::string& symbol)
         : x_(x), y_(y), symbol_(symbol) {}
 
-    /*void move(int dx, int dy) 
+   
+    void move(int dx, int dy) 
     {
         x_ += dx;
         y_ += dy;
-    }*/
-    
-    void move(int dx, int dy) 
-{
-    x_ += dx;
-    y_ += dy;
-    // Ensure the player stays within the screen boundaries
-    if (x_ < 0) x_ = 0;
-    if (x_ + symbol_.length() > COLS) x_ = COLS - symbol_.length();
-}
+        // Ensure the player stays within the screen boundaries
+        if (x_ < 0) x_ = 0;
+        if (x_ + symbol_.length() > COLS) x_ = COLS - symbol_.length();
+    }
 
     void draw() const 
     {       
