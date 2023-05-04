@@ -106,13 +106,13 @@ int main() {
     int alien_speed = 1;
     
     // Initialize the player
-    Player player((COLS - 1) / 2, LINES - 2, '/__\\');
+    Player player((COLS - 1) / 2, LINES - 2, '|__|');
 
     // Initialize the aliens
     std::vector<Alien> aliens;
     for (int i = 0; i < 4; ++i) {
         for (int j = 0; j < 10; ++j) {
-            aliens.emplace_back(5 + j * 4, 2 + i * 4, '-/__\-');
+            aliens.emplace_back(5 + j * 4, 2 + i * 4, '-@|__|@-');
         }
     }
 
