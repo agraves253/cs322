@@ -102,6 +102,8 @@ private:
     char symbol_;
 };
 
+int menuMain();
+
 int main() 
 {
     menuMain();
