@@ -1,14 +1,7 @@
-#include <ncurses.h>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
-#include <unistd.h>
-#include <string>
-
 class Player 
 {
 public:
-    Player(int x, int y, const std::string& symbol)
+    Player(int x, int y, char symbol)
         : x_(x), y_(y), symbol_(symbol) {}
 
     void move(int dx, int dy) 
@@ -18,31 +11,29 @@ public:
     }
 
     void draw() const {
-        mvaddstr(y_, x_, symbol_.c_str());
+        mvaddch(y_, x_, symbol_);
     }
 
     int x() const { return x_; }
     int y() const { return y_; }
-    std::string symbol() const { return symbol_; }
+    char symbol() const { return symbol_; }
 
 private:
     int x_;
     int y_;
-    std::string symbol_;
+    char symbol_;
 };
 
 
 class Alien 
 {
 public:
-    Alien(int x, int y, const std::string& symbol)
+    Alien(int x, int y, char symbol)
         : x_(x), y_(y), symbol_(symbol), direction_(1) {}
-    
-    int alien_speed = 1;
 
     void move() 
     {
-        x_ += x_ += direction_ * alien_speed;
+        x_ += direction_;
     }
 
     void reverseDirection() 
@@ -104,16 +95,16 @@ int main() {
     nodelay(stdscr, TRUE);
     //timeout(10);
     
-    refresh();  
-     
+    refresh(); //possible fuck up
+    
     // Initialize the player
-    Player player((COLS - 1) / 2, LINES - 2, '|__|');
+    Player player((COLS - 1) / 2, LINES - 2, '@');
 
     // Initialize the aliens
     std::vector<Alien> aliens;
     for (int i = 0; i < 4; ++i) {
         for (int j = 0; j < 10; ++j) {
-            aliens.emplace_back(5 + j * 4, 2 + i * 4, '-@|__|@-');
+            aliens.emplace_back(5 + j * 4, 2 + i * 4, 'O');
         }
     }
 
@@ -161,16 +152,12 @@ int main() {
         }
 
         // Move and draw the bullets
-        for (auto it = bullets.begin(); it != bullets.end();) 
-        {
+        for (auto it = bullets.begin(); it != bullets.end();) {
             it->move();
             it->draw();
-            if (it->y() <= 0 || it->y() >= LINES - 1) 
-            {
+            if (it->y() <= 0 || it->y() >= LINES - 1) {
                 it = bullets.erase(it);
-            } 
-            else 
-            {
+            } else {
                 ++it;
             }
         }
@@ -212,7 +199,7 @@ int main() {
         }
 
         refresh();
-        usleep(60000);
+        usleep(10000);
     }
 
     // Clean up ncurses
