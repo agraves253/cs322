@@ -103,14 +103,16 @@ int main() {
     
     refresh(); //possible fuck up
     
+    int alien_speed = 1;
+    
     // Initialize the player
-    Player player((COLS - 1) / 2, LINES - 2, '@');
+    Player player((COLS - 1) / 2, LINES - 2, '/__\');
 
     // Initialize the aliens
     std::vector<Alien> aliens;
     for (int i = 0; i < 4; ++i) {
         for (int j = 0; j < 10; ++j) {
-            aliens.emplace_back(5 + j * 4, 2 + i * 4, 'O');
+            aliens.emplace_back(5 + j * 4, 2 + i * 4, '-/__\-');
         }
     }
 
@@ -142,7 +144,7 @@ int main() {
         bool reverseDirection = false;
         for (auto& alien : aliens) 
         {
-            alien.move();
+            alien.move(alien_speed);
             alien.draw();
             if (alien.x() <= 0 || alien.x() >= COLS - 1) 
             {
@@ -158,12 +160,16 @@ int main() {
         }
 
         // Move and draw the bullets
-        for (auto it = bullets.begin(); it != bullets.end();) {
+        for (auto it = bullets.begin(); it != bullets.end();) 
+        {
             it->move();
             it->draw();
-            if (it->y() <= 0 || it->y() >= LINES - 1) {
+            if (it->y() <= 0 || it->y() >= LINES - 1) 
+            {
                 it = bullets.erase(it);
-            } else {
+            } 
+            else 
+            {
                 ++it;
             }
         }
