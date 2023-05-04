@@ -104,6 +104,8 @@ private:
 
 int main() 
 {
+    menuMain();
+    
     // Initialize ncurses
     initscr();
     cbreak();
