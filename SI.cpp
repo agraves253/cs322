@@ -1,3 +1,12 @@
+#include <ncurses.h>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+
+#include "player.h"
+#include "alien.h"
+#include "bullet.h"
+
 class Player
 {
 public:
@@ -84,15 +93,6 @@ private:
     int dy_;
     char symbol_;
 };
-
-#include <ncurses.h>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
-
-#include "player.h"
-#include "alien.h"
-#include "bullet.h"
 
 int main() 
 {
