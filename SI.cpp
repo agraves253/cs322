@@ -4,7 +4,6 @@
 #include <ctime>
 #include <unistd.h>
 #include <string>
-#include <Menu.h>
 
 class Player 
 {
@@ -107,7 +106,7 @@ int menuMain();
 
 int main() 
 {
-    menuMain();
+    //menuMain();
     
     // Initialize ncurses
     initscr();
