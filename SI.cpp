@@ -102,7 +102,8 @@ private:
     char symbol_;
 };
 
-int main() {
+int main() 
+{
     // Initialize ncurses
     initscr();
     cbreak();
@@ -174,7 +175,8 @@ int main() {
         }
 
         // Move and draw the bullets
-        for (auto it = bullets.begin(); it != bullets.end();) {
+        for (auto it = bullets.begin(); it != bullets.end();) 
+        {
             it->move();
             it->draw();
             if (it->y() <= 0 || it->y() >= LINES - 1) {
