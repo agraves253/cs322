@@ -156,7 +156,7 @@ int main() {
     {
     for (int j = 0; j < 10; ++j) 
     {
-        aliens.emplace_back(5 + j * 4, 2 + i * 4, "OoOoO");
+        aliens.emplace_back(5 + j * 4, 2 + i * 4, "  -@|__|@-  ");
     }
 }
 
