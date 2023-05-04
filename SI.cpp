@@ -1,178 +1,215 @@
-#include <array>
-#include <ncurses.h>
-#include <unistd.h>
-#include <vector>  // added vector header
+class Player
+{
+public:
+    Player(int x, int y, char symbol)
+        : x_(x), y_(y), symbol_(symbol) {}
 
-#define DELAY 10000
+    void move(int dx, int dy) 
+    {
+        x_ += dx;
+        y_ += dy;
+    }
+
+    void draw() const 
+    {
+        mvaddch(y_, x_, symbol_);
+    }
+
+    int x() const { return x_; }
+    int y() const { return y_; }
+    char symbol() const { return symbol_; }
+
+private:
+    int x_;
+    int y_;
+    char symbol_;
+};
 
 class Alien 
 {
 public:
-  int x, y;
-  int max_x;
-  int direction;
+    Alien(int x, int y, char symbol)
+        : x_(x), y_(y), symbol_(symbol), direction_(1) {}
 
-  Alien(int initialX, int initialY, int maxX, int direction)
-      : x(initialX), y(initialY), max_x(maxX), direction(direction) {}
-
-  void draw() 
-  {
-    mvaddstr(y - 1, x, "   | ");
-    mvaddstr(y, x, " _/\\_");
-    mvaddstr(y + 1, x, "/____\\");
-  }
-
-  void move(std::array<Alien, 5>& aliens) 
-  {
-    int next_x = x + direction;
-
-    if (next_x + 10 >= max_x || next_x < 0) 
+    void move() 
     {
-      // Change the direction of each alien in the array
-      for (int i = 0; i < aliens.size(); i++) 
-      {
-        aliens[i].direction *= -1;
-      }
-      // Move each alien in the opposite direction after changing direction
-      for (int i = 0; i < aliens.size(); i++) 
-      {
-        aliens[i].x += aliens[i].direction;
-      }
-    } 
-    else 
-    {
-      x += direction;
+        x_ += direction_;
     }
-  }
+
+    void reverseDirection() 
+    {
+        direction_ *= -1;
+        y_ += 1;
+    }
+
+    void draw() const 
+    {
+        mvaddch(y_, x_, symbol_);
+    }
+
+    int x() const { return x_; }
+    int y() const { return y_; }
+    char symbol() const { return symbol_; }
+
+private:
+    int x_;
+    int y_;
+    char symbol_;
+    int direction_;
 };
 
 class Bullet 
 {
 public:
-  int x, y;
-  int dy;
-  
-  Bullet(int initialX, int initialY, int initialDY)
-      : x(initialX), y(initialY), dy(initialDY) {}
-  
-  void draw() 
-  {
-    mvaddstr(y, x, "^");
-  }
-  
-  void move() 
-  {
-    y += dy;
-  }
+    Bullet(int x, int y, int dy, char symbol)
+        : x_(x), y_(y), dy_(dy), symbol_(symbol) {}
+
+    void move() 
+    {
+        y_ += dy_;
+    }
+
+    void draw() const 
+    {
+        mvaddch(y_, x_, symbol_);
+    }
+
+    int x() const { return x_; }
+    int y() const { return y_; }
+    char symbol() const { return symbol_; }
+
+private:
+    int x_;
+    int y_;
+    int dy_;
+    char symbol_;
 };
 
-class Player 
+#include <ncurses.h>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+
+#include "player.h"
+#include "alien.h"
+#include "bullet.h"
+
+int main() 
 {
-public:
-  int x, y;
-  int max_x;
-  std::vector<Bullet> bullets;  // changed array to vector
+    // Initialize ncurses
+    initscr();
+    cbreak();
+    noecho();
+    keypad(stdscr, TRUE);
+    curs_set(0);
+    timeout(100);
 
-  Player(int initialX, int initialY, int maxX)
-      : x(initialX), y(initialY), max_x(maxX) {}
+    // Initialize the player
+    Player player((COLS - 1) / 2, LINES - 2, '@');
 
-  void draw() 
-  {
-    mvaddstr(y, x, " | ");
-    mvaddstr(y + 1, x, "/ \\");
-  }
-
-  void move_left() 
-  {
-    if (x > 0) {
-      x--;
-    }
-  }
-
-  void move_right() 
-  {
-    if (x + 3 < max_x) 
+    // Initialize the aliens
+    std::vector<Alien> aliens;
+    for (int i = 0; i < 4; ++i) 
     {
-      x++;
+        for (int j = 0; j < 10; ++j) 
+        {
+            aliens.emplace_back(5 + j * 4, 2 + i * 4, 'O');
+        }
     }
-  }
 
-  void fire_bullet() 
-  {
-    // Create a new bullet object and add it to the bullets vector
-    Bullet bullet(x + 1, y - 1, -1);
-    bullets.push_back(bullet);
-  }
-};
+    // Initialize the bullets
+    std::vector<Bullet> bullets;
 
-int main(int argc, char *argv[]) 
-{
-  initscr();
-  noecho();
-  curs_set(FALSE);
-
-  int max_y, max_x;
-  getmaxyx(stdscr, max_y, max_x);
-
-  std::array<Alien, 5> aliens = 
-  {
+    // Game loop
+    while (true) 
     {
-      Alien(0 * 20, 0, max_x, 1),
-      Alien(1 * 20, 0, max_x, 1),
-      Alien(2 * 20, 0, max_x, 1),
-      Alien(3 * 20, 0, max_x, 1),
-      Alien(4 * 20, 0, max_x, 1),
+        clear();
+
+        // Move and draw the player
+        int ch = getch();
+        switch (ch) 
+        {
+        case KEY_LEFT:
+            player.move(-1, 0);
+            break;
+        case KEY_RIGHT:
+            player.move(1, 0);
+            break;
+        case ' ':
+            bullets.emplace_back(player.x(), player.y() - 1, -1, '|');
+            break;
+        }
+        player.draw();
+
+        // Move and draw the aliens
+        bool reverseDirection = false;
+        for (auto& alien : aliens) 
+        {
+            alien.move();
+            alien.draw();
+            if (alien.x() <= 0 || alien.x() >= COLS - 1) 
+            {
+                reverseDirection = true;
+            }
+        }
+        if (reverseDirection) 
+        {
+            for (auto& alien : aliens) 
+            {
+                alien.reverseDirection();
+            }
+        }
+
+        // Move and draw the bullets
+        for (auto it = bullets.begin(); it != bullets.end();) 
+        {
+            it->move();
+            it->draw();
+            if (it->y() <= 0 || it->y() >= LINES - 1) 
+            {
+                it = bullets.erase(it);
+            } else {
+                ++it;
+            }
+        }
+
+        // Collision detection
+        for (auto it = bullets.begin(); it != bullets.end();) 
+        {
+            bool hit = false;
+            for (auto jt = aliens.begin(); jt != aliens.end();) 
+            {
+                if (it->x() == jt->x() && it->y() == jt->y()) 
+                {
+                    jt = aliens.erase(jt);
+                    hit = true;
+                    break;
+                } else {
+                    ++jt;
+                }
+            }
+            if (hit) {
+                it = bullets.erase(it);
+            } else {
+                ++it;
+            }
+        }
+
+        // Check for game over
+        if (aliens.empty()) 
+        {
+            mvprintw(LINES / 2, (COLS - 20) / 2, "YOU WIN!");
+            refresh();
+            getch();
+            break;
+        }
+
+        refresh();
     }
-  };
 
-  Player player(max_x / 2, max_y - 3, max_x);
+    // Clean up ncurses
+    endwin();
 
-while (1) 
-{
-  clear();
-
-  player.draw();
-
-  for (int i = 0; i < aliens.size(); i++) 
-  {
-    aliens[i].draw();
-  }
-
-  // Draw and move bullets
-  for (int i = 0; i < player.bullets.size(); i++) 
-  {
-    player.bullets[i].draw();
-    player.bullets[i].move();
-  }
-
-  refresh(); // Refresh the screen after drawing everything
-  usleep(DELAY);
-
-  // Move aliens independently of user input
-  for (int i = 0; i < aliens.size(); i++) 
-  {
-    aliens[i].move(aliens);
-  }
-
-  int ch = getch();
-  switch (ch) 
-  {
-    case 'a':
-      player.move_left();
-      break;
-    case 'd':
-      player.move_right();
-      break;
-    case ' ':
-      player.fire_bullet(); // Call the fire_bullet method of the Player object
-      break;
-    default:
-      break;
-  }
-}
-
-endwin(); // added this line to properly close the ncurses window
-
-return 0; // added this line to return a value from main
+    return 0;
 }
 
