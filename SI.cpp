@@ -1,14 +1,91 @@
-#include <ncurses.h>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
-
-#include "player.h"
-#include "alien.h"
-#include "bullet.h"
-
-int main() 
+class Player 
 {
+public:
+    Player(int x, int y, char symbol)
+        : x_(x), y_(y), symbol_(symbol) {}
+
+    void move(int dx, int dy) 
+    {
+        x_ += dx;
+        y_ += dy;
+    }
+
+    void draw() const {
+        mvaddch(y_, x_, symbol_);
+    }
+
+    int x() const { return x_; }
+    int y() const { return y_; }
+    char symbol() const { return symbol_; }
+
+private:
+    int x_;
+    int y_;
+    char symbol_;
+};
+
+
+class Alien 
+{
+public:
+    Alien(int x, int y, char symbol)
+        : x_(x), y_(y), symbol_(symbol), direction_(1) {}
+
+    void move() 
+    {
+        x_ += direction_;
+    }
+
+    void reverseDirection() 
+    {
+        direction_ *= -1;
+        y_ += 1;
+    }
+
+    void draw() const 
+    {
+        mvaddch(y_, x_, symbol_);
+    }
+
+    int x() const { return x_; }
+    int y() const { return y_; }
+    char symbol() const { return symbol_; }
+
+private:
+    int x_;
+    int y_;
+    char symbol_;
+    int direction_;
+};
+
+class Bullet 
+{
+public:
+    Bullet(int x, int y, int dy, char symbol)
+        : x_(x), y_(y), dy_(dy), symbol_(symbol) {}
+
+    void move() 
+    {
+        y_ += dy_;
+    }
+
+    void draw() const 
+    {
+        mvaddch(y_, x_, symbol_);
+    }
+
+    int x() const { return x_; }
+    int y() const { return y_; }
+    char symbol() const { return symbol_; }
+
+private:
+    int x_;
+    int y_;
+    int dy_;
+    char symbol_;
+};
+
+int main() {
     // Initialize ncurses
     initscr();
     cbreak();
@@ -22,10 +99,8 @@ int main()
 
     // Initialize the aliens
     std::vector<Alien> aliens;
-    for (int i = 0; i < 4; ++i) 
-    {
-        for (int j = 0; j < 10; ++j) 
-        {
+    for (int i = 0; i < 4; ++i) {
+        for (int j = 0; j < 10; ++j) {
             aliens.emplace_back(5 + j * 4, 2 + i * 4, 'O');
         }
     }
@@ -74,16 +149,12 @@ int main()
         }
 
         // Move and draw the bullets
-        for (auto it = bullets.begin(); it != bullets.end();) 
-        {
+        for (auto it = bullets.begin(); it != bullets.end();) {
             it->move();
             it->draw();
-            if (it->y() <= 0 || it->y() >= LINES - 1) 
-            {
+            if (it->y() <= 0 || it->y() >= LINES - 1) {
                 it = bullets.erase(it);
-            } 
-            else 
-            {
+            } else {
                 ++it;
             }
         }
@@ -105,7 +176,8 @@ int main()
                     ++jt;
                 }
             }
-            if (hit) {
+            if (hit) 
+            {
                 it = bullets.erase(it);
             } 
             else 
@@ -131,4 +203,3 @@ int main()
 
     return 0;
 }
-
