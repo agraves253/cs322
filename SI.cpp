@@ -4,6 +4,7 @@
 #include <ctime>
 #include <unistd.h>
 #include <string>
+#include <Menu.h>
 
 class Player 
 {
