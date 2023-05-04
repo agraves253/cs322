@@ -130,6 +130,8 @@ int main() {
     std::vector<Bullet> bullets;
     
     int score = 0;
+    // Print score label in the top right-hand corner
+    mvprintw(0, COLS - 15, "Score: %d", score);
 
     // Game loop
     while (true) 
@@ -182,33 +184,7 @@ int main() {
             }
         }
 
-        // Collision detection
-        /*for (auto it = bullets.begin(); it != bullets.end();) 
-        {
-            bool hit = false;
-            for (auto jt = aliens.begin(); jt != aliens.end();) 
-            {
-                if (it->x() == jt->x() && it->y() == jt->y()) 
-                {
-                    jt = aliens.erase(jt);
-                    hit = true;
-                    break;
-                } 
-                else 
-                {
-                    ++jt;
-                }
-            }
-            if (hit) 
-            {
-                it = bullets.erase(it);
-            } 
-            else 
-            {
-                ++it;
-            }
-        }*/
-        
+      
         for (auto it = bullets.begin(); it != bullets.end();) 
         {
             bool hit = false;
@@ -219,6 +195,8 @@ int main() {
                 jt = aliens.erase(jt);
                 hit = true;
                 score += 10;  // Update score
+                // Print updated score in the top right-hand corner
+                mvprintw(0, COLS - 15, "Score: %d", score);
                 break;
             } 
            else 
