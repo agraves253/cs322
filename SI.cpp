@@ -106,7 +106,7 @@ int main() {
     int alien_speed = 1;
     
     // Initialize the player
-    Player player((COLS - 1) / 2, LINES - 2, '/__\');
+    Player player((COLS - 1) / 2, LINES - 2, '/__\\');
 
     // Initialize the aliens
     std::vector<Alien> aliens;
