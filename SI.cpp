@@ -5,12 +5,15 @@
 #include <unistd.h>
 #include <string>
 
+//player class
 class Player 
 {
 public:
+    //initialize player's starting position and symbol
     Player(int x, int y, const std::string& symbol)
         : x_(x), y_(y), symbol_(symbol) {}
 
+    //move the player's position by dx and dy
     void move(int dx, int dy) 
     {
         x_ += dx;
@@ -26,6 +29,7 @@ public:
         }
     }
 
+    //draw the player at their current position
     void draw() const {       
         for (size_t i = 0; i < symbol_.length(); ++i) 
         {
@@ -33,33 +37,43 @@ public:
         }
     }
 
+    //return the player's x coordinate
     int x() const { return x_; }
+
+    //return the player's y coordinate
     int y() const { return y_; }
+
+    //return player's symbol
     const std::string& symbol() const { return symbol_; }
 
 private:
-    int x_;
-    int y_;
-    std::string symbol_;
+    int x_; 
+    int y_; 
+    std::string symbol_; 
 };
 
+//Alien class
 class Alien 
 {
 public:
+    //create an Alien object
     Alien(int x, int y, std::string symbol)
         : x_(x), y_(y), symbol_(symbol), direction_(1) {}
 
+    // Move the alien horizontally by adding the direction to its x-coordinate
     void move() 
     {
         x_ += direction_;
     }
 
+    // Reverse the direction of the alien and move it down one row
     void reverseDirection() 
     {
         direction_ *= -1;
         y_ += 1;
     }
 
+    // Draw the alien on the screen
     void draw() const 
     {
         for (int i = 0; i < symbol_.size(); ++i) 
@@ -68,8 +82,13 @@ public:
         }
     }
 
+    // Return the x-coordinate of the alien
     int x() const { return x_; }
+
+    // Return the y-coordinate of the alien
     int y() const { return y_; }
+
+    // Return the symbol of the alien
     std::string symbol() const { return symbol_; }
 
 private:
@@ -78,6 +97,7 @@ private:
     std::string symbol_;
     int direction_;
 };
+
 
 class Bullet 
 {
