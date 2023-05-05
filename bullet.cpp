@@ -5,6 +5,9 @@
 #include <unistd.h>
 #include <string>
 
+#ifndef BULLET_H
+#define BULLET_H
+
 class Bullet 
 {
 public:
@@ -30,3 +33,5 @@ private:
     int dy_;
     char symbol_;
 };
+
+#endif
