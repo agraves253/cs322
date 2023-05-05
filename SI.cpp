@@ -71,6 +71,11 @@ public:
     int x() const { return x_; }
     int y() const { return y_; }
     std::string symbol() const { return symbol_; }
+    
+    void fireBullet(std::vector<Bullet>& bullets) 
+    {
+        bullets.emplace_back(x_ + symbol_.length() / 2, y_ + 1, 1, '*');
+    }
 
 private:
     int x_;
@@ -167,7 +172,13 @@ while (true)
     for (auto& alien : aliens) 
     {
         alien.move();
+        if (rand() % 100 < 10) 
+        {
+            alien.fireBullet(bullets);
+        }
+        
         alien.draw();
+        
         if (alien.x() <= 0 || alien.x() >= COLS - 1) 
         {
             reverseDirection = true;
@@ -178,6 +189,31 @@ while (true)
         for (auto& alien : aliens) 
         {
             alien.reverseDirection();
+        }
+    }
+    
+        // Move and draw the bullets fired by aliens
+    for (auto it = aliensBullets.begin(); it != aliensBullets.end();) 
+    {
+        it->move();
+        it->draw();
+        if (it->y() <= 0 || it->y() >= LINES - 1) 
+        {
+            it = aliensBullets.erase(it);
+        } 
+        else 
+        {
+            // Check for collision with player
+            if (it->y() == player.y() && it->x() >= player.x() && it->x() < player.x() + player.symbol().length()) 
+            {
+                // Player hit, end game
+                mvprintw(LINES / 2, (COLS - 20) / 2, "GAME OVER");
+                refresh();
+                getch();
+                endwin();
+                return 0;
+            }
+            ++it;
         }
     }
 
