@@ -1,4 +1,9 @@
 #include <ncurses.h>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <unistd.h>
+#include <string>
 
 class Bullet 
 {
@@ -11,8 +16,7 @@ public:
         y_ += dy_;
     }
 
-    void draw() const 
-    {
+    void draw() const {
         mvaddch(y_, x_, symbol_);
     }
 
