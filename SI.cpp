@@ -71,7 +71,7 @@ public:
     int x() const { return x_; }
     int y() const { return y_; }
     std::string symbol() const { return symbol_; }
-    
+
 private:
     int x_;
     int y_;
@@ -165,9 +165,9 @@ while (true)
     // Move and draw the aliens
     bool reverseDirection = false;
     for (auto& alien : aliens) 
-    {    
+    {
+        alien.move();
         alien.draw();
-        
         if (alien.x() <= 0 || alien.x() >= COLS - 1) 
         {
             reverseDirection = true;
@@ -180,7 +180,7 @@ while (true)
             alien.reverseDirection();
         }
     }
-    
+
     // Move and draw the bullets
     for (auto it = bullets.begin(); it != bullets.end();) 
     {
