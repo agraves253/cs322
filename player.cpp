@@ -5,6 +5,10 @@
 #include <unistd.h>
 #include <string>
 
+#ifndef PLAYER_H
+#define PLAYER_H
+
+
 //player class
 class Player 
 {
@@ -51,3 +55,5 @@ private:
     int y_; 
     std::string symbol_; 
 };
+
+#endif
