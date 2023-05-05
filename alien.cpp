@@ -5,6 +5,10 @@
 #include <unistd.h>
 #include <string>
 
+#ifndef ALIEN_H
+#define ALIEN_H
+
+
 //Alien class
 class Alien 
 {
@@ -50,3 +54,5 @@ private:
     std::string symbol_;
     int direction_;
 };
+
+#endif // ALIEN_H
