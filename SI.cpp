@@ -4,9 +4,9 @@
 #include <ctime>
 #include <unistd.h>
 #include <string>
-#include <alien.cpp>
-#include <player.cpp>
-#include <bullet.cpp>
+#include "alien.h"
+#include "bullet.h"
+#include "player.h"
 
 
 int main() 
